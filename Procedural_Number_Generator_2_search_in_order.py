@@ -1,25 +1,33 @@
 import numpy as np
+from itertools import permutations
 
-# Функция для генерации массива случайных чисел
-def generate_random_array(seed, length):
-    np.random.seed(seed)
-    return np.random.randint(0, 10, size=length).tolist()  # Генерация чисел от 0 до 9
+# Функция для генерации всех перестановок чисел от 0 до 9
+def generate_permutations(numbers):
+    return list(permutations(numbers))
 
-# Функция для поиска массива с заданным сидом и целевым массивом
+# Функция для поиска массивов с заданным сидом и целевым массивом
 def find_array_from_seed(start_seed, target_array):
     length = len(target_array)
-    seed = start_seed  # Начинаем с указанного сида
+    numbers = list(range(10))
+    permuted_arrays = generate_permutations(numbers)  # Генерация всех перестановок
 
+    index = start_seed  # Начинаем с указанного индекса
+    
     while True:  # Бесконечный цикл
-        generated_array = generate_random_array(seed, length)
-        if generated_array == target_array:
-            print(f"Найден сид {seed}: {generated_array}")  # Нашли соответствие
-            return seed
-        else:
-            print(f"сид {seed}: {generated_array}")  # Не соответствует
-        seed += 1  # Увеличиваем сид на 1 для следующей итерации
+        if index >= len(permuted_arrays):  # Если индекс выходит за пределы
+            print("Все перестановки уже проверены.")
+            break
+        
+        generated_array = permuted_arrays[index]  # Получаем перестановку по индексу
+        print(f"сид {index + 1}: {list(generated_array)}")  # Выводим текущую перестановку
+        
+        if list(generated_array) == target_array:
+            print(f"Найдена перестановка с сидом {index + 1}: {list(generated_array)}")  # Нашли соответствие
+            return index + 1  # Возвращаем 1-индексируемый номер перестановки
+        
+        index += 1  # Увеличиваем индекс для следующей итерации
 
-# Пример использования
-starting_seed = 2166528  # Замените на нужный сид
-target_array = [9, 6, 9, 2, 6, 6, 5, 7, 5, 0]  # Замените на целевой массив
+# Основная часть программы
+starting_seed = 1000000  # Начальный индекс
+target_array = [2, 6, 3, 4, 8, 7, 9, 5, 0, 1]  # Замените на целевой массив
 find_array_from_seed(starting_seed, target_array)

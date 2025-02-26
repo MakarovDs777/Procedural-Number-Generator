@@ -1,34 +1,25 @@
 import numpy as np
-from itertools import permutations
 
 # Функция для генерации массива случайных чисел
 def generate_random_array(seed, length):
     np.random.seed(seed)
     return np.random.randint(0, 10, size=length).tolist()  # Генерация чисел от 0 до 9
 
-# Функция для поиска сида по заданному массиву
-def find_seed(target_array):
+# Функция для поиска массива с заданным сидом и целевым массивом
+def find_array_from_seed(start_seed, target_array):
     length = len(target_array)
-    for seed in range(2**32):  # Перебор всех возможных сидов
+    seed = start_seed  # Начинаем с указанного сида
+
+    while True:  # Бесконечный цикл
         generated_array = generate_random_array(seed, length)
-        # Вывод информации о текущем сиде и результате сравнения
         if generated_array == target_array:
-            print(f"{seed} 1 {generated_array}")  # Сид соответствует
+            print(f"Найден сид {seed}: {generated_array}")  # Нашли соответствие
             return seed
         else:
-            print(f"{seed} 0 {generated_array}")  # Сид не соответствует
-    return None  # Если сид не найден
+            print(f"сид {seed}: {generated_array}")  # Не соответствует
+        seed += 1  # Увеличиваем сид на 1 для следующей итерации
 
-# Функция для генерации и поиска по всем перестановкам
-def search_seeds_in_permutations(numbers):
-    for index, perm in enumerate(permutations(numbers)):
-        print(f"Поиск для сид {index + 1}: {list(perm)}")
-        found_seed = find_seed(list(perm))
-        if found_seed is not None:
-            print(f"Найден сид для {list(perm)}: {found_seed}")
-        else:
-            print(f"Сид не найден для {list(perm)}")
-
-# Основная часть программы
-numbers = [1,2,3,4,5,6,7,8,9,0]
-search_seeds_in_permutations(numbers)
+# Пример использования
+starting_seed = 2166528  # Замените на нужный сид
+target_array = [9, 6, 9, 2, 6, 6, 5, 7, 5, 0]  # Замените на целевой массив
+find_array_from_seed(starting_seed, target_array)

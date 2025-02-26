@@ -30,5 +30,5 @@ def search_seeds_in_permutations(numbers):
             print(f"Сид не найден для {list(perm)}")
 
 # Основная часть программы
-numbers = list(range(10))  # Числа от 0 до 9
+numbers = [1,2,3,4,5,6,7,8,9,0]
 search_seeds_in_permutations(numbers)

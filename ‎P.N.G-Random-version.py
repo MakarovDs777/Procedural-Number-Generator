@@ -3,11 +3,11 @@ import numpy as np
  # Функция для генерации массива случайных чисел
 def generate_random_array(seed, length):
     np.random.seed(seed)
-    return np.random.randint(0, 10, size=length).tolist()  # Генерация чисел от 0 до 9
+    return np.random.randint(0, LenNumber, size=length).tolist()  # Генерация чисел от 0 до 9
  
  # Функция для отображения сгенерированного массива
 def display_generated_array(seed):
-    generated_array = generate_random_array(seed, 10)  # Длина массива = 10
+    generated_array = generate_random_array(seed, LenNumber)  # Длина массива = 10
     print(f"сид {seed}: {generated_array}")  # Выводим сид и массив
  
  # Основная часть программы
@@ -16,5 +16,6 @@ def search_from_seed(start_seed):
         display_generated_array(seed)
  
  # Пример использования
-starting_seed = 0  # Замените на нужный сид
+LenNumber = 10
+starting_seed = 9  # Замените на нужный сид
 search_from_seed(starting_seed)
